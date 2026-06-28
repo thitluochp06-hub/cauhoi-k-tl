@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Câu hỏi hàng ngày.</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #81545c;
+        /* Đổi tên file ảnh nền phong cảnh của bạn ở đây */
+        background-image: url("");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: "Segoe UI", Arial, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Khung nội dung chính (Đã ẩn nền trắng và viền) */
+      .container {
+        text-align: center;
+        width: 420px;
+        max-width: 90%;
+        z-index: 10;
+      }
+
+      /* Khung chứa ảnh bạn gái */
+      .photo-box {
+        width: 100%;
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .photo-box img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* Dòng chữ câu hỏi */
+      h1 {
+        color: #f75e7a;
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+        font-weight: bold;
+        line-height: 1.4;
+        text-shadow: 1px 1px 4px rgba(19, 9, 9, 0.8);
+      }
+
+      /* Vùng chứa nút ban đầu */
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        width: 100%;
+        height: 50px;
+      }
+
+      .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Nút Đồng ý */
+      .btn-yes {
+        background-color: #db3c59;
+        color: rgb(251, 245, 245);
+        transition: transform 0.1s ease;
+      }
+
+      .btn-yes:hover {
+        background-color: #ff2a4b;
+        transform: scale(1.05);
+      }
+
+      /* Nút Không (Cài đặt để chuẩn bị chạy khắp màn hình) */
+      .btn-no {
+        background-color: #5582b0;
+        color: white;
+        transition:
+          left 0.1s ease-out,
+          top 0.1s ease-out;
+        z-index: 999; /* Đảm bảo nút luôn nổi lên trên cùng khi chạy */
+      }
+
+      /* HIỆU ỨNG TRÁI TIM BAY NỀN */
+      .heart {
+        position: absolute;
+        bottom: -50px;
+        color: rgba(255, 77, 109, 0.6);
+        font-size: 20px;
+        pointer-events: none;
+        animation: floatUp linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-105vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="photo-box">
+        <!-- Đổi tên file ảnh bạn gái của bạn ở đây -->
+        <img src="/img/Oanh1.jpg" alt="Photo" />
+      </div>
+
+      <h1>Em ra lấy đồ được không??? ❤️</h1>
+
+      <div class="btn-group">
+        <button class="btn btn-yes" onclick="agree()">Em ra bây giờ</button>
+        <button class="btn btn-no" id="noBtn" onmouseover="moveButton()">
+          Không
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // CHỨC NĂNG CHO NÚT "KHÔNG" CHẠY KHẮP BẢN ĐỒ / BACKGROUND
+      function moveButton() {
+        const btn = document.getElementById("noBtn");
+
+        // Đưa nút ra khỏi bố cục bình thường và gắn cố định theo toàn màn hình (fixed)
+        btn.style.position = "fixed";
+
+        // Tính toán khoảng cách tối đa theo chiều rộng và chiều cao của toàn bộ trình duyệt
+        const maxX = window.innerWidth - btn.offsetWidth - 20;
+        const maxY = window.innerHeight - btn.offsetHeight - 20;
+
+        // Tạo tọa độ ngẫu nhiên xuất hiện trên màn hình nền
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        // Cập nhật vị trí mới cho nút Không
+        btn.style.left = randomX + "px";
+        btn.style.top = randomY + "px";
+      }
+
+      // TẠO TRÁI TIM BAY TỰ ĐỘNG
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+      }
+      setInterval(createHeart, 300);
+
+      // KHI BẤM ĐỒNG Ý
+      function agree() {
+        alert("Bé ngoan quá! Ra đi anh đợi! 🥰❤️");
+      }
+    </script>
+  </body>
+</html>
